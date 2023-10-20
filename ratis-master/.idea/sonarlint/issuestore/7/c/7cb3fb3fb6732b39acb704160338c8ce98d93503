@@ -1,0 +1,13 @@
+
+‡
+java:S1130<"qRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from constructor's body.(¹£ş
+‡
+java:S1130D"qRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from constructor's body.(¹£ş
+^	java:S119ˆ"IRename this generic name to match the regular expression '^[A-Z][0-9]?$'.(­ÁÎ|
+^	java:S119ˆ"IRename this generic name to match the regular expression '^[A-Z][0-9]?$'.(­ÁÎ|
+d	java:S119¡"IRename this generic name to match the regular expression '^[A-Z][0-9]?$'.(“’…Æøÿÿÿÿ
+d	java:S119¡"IRename this generic name to match the regular expression '^[A-Z][0-9]?$'.(“’…Æøÿÿÿÿ
+d	java:S119Ã"IRename this generic name to match the regular expression '^[A-Z][0-9]?$'.(Ó Îïşÿÿÿÿ
+d	java:S119Ã"IRename this generic name to match the regular expression '^[A-Z][0-9]?$'.(Ó Îïşÿÿÿÿ
+_	java:S119Ö"IRename this generic name to match the regular expression '^[A-Z][0-9]?$'.(ü—¾–
+_	java:S119Ö"IRename this generic name to match the regular expression '^[A-Z][0-9]?$'.(ü—¾–

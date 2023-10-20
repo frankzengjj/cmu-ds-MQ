@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/ratis-master/demo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-assembly/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-assembly/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-client/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-client/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-docs/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-docs/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-examples/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-examples/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-grpc/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-grpc/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-metrics-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-metrics-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-metrics-default/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-metrics-default/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-metrics-dropwizard3/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-metrics-dropwizard3/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-netty/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-netty/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-proto/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-proto/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-replicated-map/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-replicated-map/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-resource-bundle/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-resource-bundle/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-server-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-server-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-server/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-shell/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-shell/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-test/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-test/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-tools/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/ratis-tools/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ratis-master/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

@@ -1,0 +1,12 @@
+
+h	java:S112æ"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8Ü–‹Ï´1
+{
+java:S2293C"YReplace the type specification in this constructor call with the diamond operator ("<>").(ß€£¡úÿÿÿÿ8§‹ŠÏ´1
+{
+java:S2293["YReplace the type specification in this constructor call with the diamond operator ("<>").(ß€£¡úÿÿÿÿ8¨‹ŠÏ´1
+|
+java:S2293á"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ó®™ñüÿÿÿÿ8¨‹ŠÏ´1
+_
+java:S3457¶"AFormat specifiers should be used instead of string concatenation.(Î ö–8Ð‹ŠÏ´1
+]
+java:S1117á":Rename "mylist" which hides the field declared at line 91.(Ó®™ñüÿÿÿÿ8Ò‹ŠÏ´1

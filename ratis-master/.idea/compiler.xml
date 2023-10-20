@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="ratis-server-api" />
+        <module name="ratis-docs" />
+        <module name="ratis-client" />
+        <module name="ratis-resource-bundle" />
+        <module name="ratis-tools" />
+        <module name="ratis-examples" />
+        <module name="ratis-common" />
+        <module name="ratis-proto" />
+        <module name="ratis-metrics-dropwizard3" />
+        <module name="ratis-test" />
+        <module name="ratis-metrics-default" />
+        <module name="ratis-shell" />
+        <module name="ratis-netty" />
+        <module name="ratis-metrics-api" />
+        <module name="ratis-replicated-map" />
+        <module name="ratis-server" />
+        <module name="ratis-grpc" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="demo" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="demo" options="-parameters" />
+      <module name="ratis-client" options="-Xlint:all,-options,-path" />
+      <module name="ratis-common" options="-Xlint:all,-options,-path" />
+      <module name="ratis-docs" options="-Xlint:all,-options,-path" />
+      <module name="ratis-examples" options="-Xlint:all,-options,-path" />
+      <module name="ratis-grpc" options="-Xlint:all,-options,-path" />
+      <module name="ratis-metrics-api" options="-Xlint:all,-options,-path" />
+      <module name="ratis-metrics-default" options="-Xlint:all,-options,-path" />
+      <module name="ratis-metrics-dropwizard3" options="-Xlint:all,-options,-path" />
+      <module name="ratis-netty" options="-Xlint:all,-options,-path" />
+      <module name="ratis-proto" options="-Xlint:none -XDignore.symbol.file" />
+      <module name="ratis-replicated-map" options="-Xlint:all,-options,-path" />
+      <module name="ratis-resource-bundle" options="-Xlint:all,-options,-path" />
+      <module name="ratis-server" options="-Xlint:all,-options,-path" />
+      <module name="ratis-server-api" options="-Xlint:all,-options,-path" />
+      <module name="ratis-shell" options="-Xlint:all,-options,-path" />
+      <module name="ratis-test" options="-Xlint:all,-options,-path" />
+      <module name="ratis-tools" options="-Xlint:all,-options,-path" />
+    </option>
+  </component>
+</project>

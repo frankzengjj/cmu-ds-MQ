@@ -1,0 +1,19 @@
+
+m
+java:S3077Q"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(¤¡‹
+_
+java:S3358B"DExtract this nested ternary operation into an independent statement.(¡Í¹ıûÿÿÿÿ
+i
+java:S3776"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.( ç·±
+]
+java:S3457Ó"AFormat specifiers should be used instead of string concatenation.(…Áûãÿÿÿÿÿ
+d
+java:S1871ó"MThis branch's code block is the same as the block for the branch on line 749.(æ‘¥ğ
+n
+java:S3077ı"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(©Âö±
+n
+java:S3077…"WUse a thread-safe type; adding "volatile" is not enough to make this field thread-safe.(œ¯ß
+M
+java:S3398ğ"7Move this method into "InstallSnapshotResponseHandler".(ùµÓJ
+M
+java:S3398Û"1Move this method into "AppendLogResponseHandler".(—†Øêüÿÿÿÿ
