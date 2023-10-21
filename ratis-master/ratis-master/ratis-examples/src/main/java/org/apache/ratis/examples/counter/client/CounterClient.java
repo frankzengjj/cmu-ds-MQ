@@ -59,20 +59,27 @@ public final class CounterClient implements Closeable {
         increment, CounterCommand.INCREMENT, blocking? "BlockingApi": "AsyncApi");
     final List<Future<RaftClientReply>> futures = new ArrayList<>(increment);
 
+    Message message = Message.valueOf("ahha");
     //send INCREMENT command(s)
     if (blocking) {
       // use BlockingApi
       final ExecutorService executor = Executors.newFixedThreadPool(10);
       for (int i = 0; i < increment; i++) {
         final Future<RaftClientReply> f = executor.submit(
-            () -> client.io().send(CounterCommand.INCREMENT.getMessage()));
+            () -> client.io().send(
+                    message
+                    //CounterCommand.INCREMENT.getMessage()
+            ));
         futures.add(f);
       }
       executor.shutdown();
     } else {
       // use AsyncApi
       for (int i = 0; i < increment; i++) {
-        final Future<RaftClientReply> f = client.async().send(CounterCommand.INCREMENT.getMessage());
+        final Future<RaftClientReply> f = client.async().send(
+                message
+                //CounterCommand.INCREMENT.getMessage()
+        );
         futures.add(f);
       }
     }
@@ -98,9 +105,9 @@ public final class CounterClient implements Closeable {
     final long startTime = System.currentTimeMillis();
     final ExecutorService executor = Executors.newFixedThreadPool(Constants.PEERS.size());
     Constants.PEERS.forEach(p -> {
+      System.out.println((p.getId()));
       final Future<RaftClientReply> f = CompletableFuture.supplyAsync(() -> {
                 try {
-                  Message message = Message.valueOf("my message");
                   //return client.io().sendReadOnly(CounterCommand.GET.getMessage(), p.getId());
                   return client.io().sendReadOnly(message, p.getId());
                 } catch (IOException e) {

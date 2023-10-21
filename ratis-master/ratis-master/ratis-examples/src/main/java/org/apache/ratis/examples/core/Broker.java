@@ -11,5 +11,5 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Broker {
-    private HashMap<String, List<Partition>> topPartitionListMap;
+    private HashMap<String, List<Partition>> topPartitionListMap = new HashMap<>();
 }

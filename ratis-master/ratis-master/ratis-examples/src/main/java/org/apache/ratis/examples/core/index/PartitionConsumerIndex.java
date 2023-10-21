@@ -12,5 +12,5 @@ import java.util.HashMap;
 public class PartitionConsumerIndex {
     private String topic;
     // key: consumerGroupId, value: consumeIndex
-    private HashMap<String, Integer> partitionConsumerIndexMap;
+    private HashMap<String, Integer> partitionConsumerIndexMap = new HashMap<>();
 }

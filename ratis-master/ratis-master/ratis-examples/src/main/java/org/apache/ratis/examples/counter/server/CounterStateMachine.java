@@ -46,6 +46,7 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -65,9 +66,7 @@ public class CounterStateMachine extends BaseStateMachine {
   static class CounterState {
     private final TermIndex applied;
     private final int counter;
-
     private Broker broker;
-
 
     CounterState(TermIndex applied, int counter, Broker broker) {
       this.applied = applied;
@@ -97,6 +96,8 @@ public class CounterStateMachine extends BaseStateMachine {
 
   private MyMessage myMessage = new MyMessage();
 
+  private int partitionIndex = 0;
+
   CounterStateMachine(TimeDuration simulatedSlowness) {
     this.simulatedSlowness = simulatedSlowness;
   }
@@ -115,7 +116,7 @@ public class CounterStateMachine extends BaseStateMachine {
     this.broker = broker;
   }
 
-  private synchronized int incrementCounter(TermIndex termIndex) {
+  private synchronized int incrementCounter(TermIndex termIndex,MyMessage myMessage){
     try {
       if (!simulatedSlowness.equals(TimeDuration.ZERO)) {
         simulatedSlowness.sleep();
@@ -140,10 +141,14 @@ public class CounterStateMachine extends BaseStateMachine {
       for (int i = 0; i <= partitionIndex; i++) {
         partitionList.add(new Partition());
       }
+      broker.getTopPartitionListMap().put(myMessage.getTopic(), partitionList);
     }
 
     //2. Fill message into partition
-    broker.getTopPartitionListMap().get(myMessage.getTopic()).get(partitionIndex).getMessageList().add(myMessage);
+    if(myMessage.getTopic()!=null) {
+      broker.getTopPartitionListMap().get(myMessage.getTopic()).get(partitionIndex).getMessageList().add(myMessage);
+    }
+
 
     return counter.incrementAndGet();
   }
@@ -266,9 +271,9 @@ public class CounterStateMachine extends BaseStateMachine {
     //if (!CounterCommand.GET.matches(command)) {
     //  return JavaUtils.completeExceptionally(new IllegalArgumentException("Invalid Command: " + command));
     //}
-    myMessage.setTopic("test");
-    myMessage.setContent(command);
-    return CompletableFuture.completedFuture(Message.valueOf(counter.toString() + " " + broker.toString()));
+    partitionIndex++;
+
+    return CompletableFuture.completedFuture(Message.valueOf(counter.toString() + " index: " + partitionIndex +" " + broker.toString()));
   }
 
   /**
@@ -283,12 +288,18 @@ public class CounterStateMachine extends BaseStateMachine {
 
     //check if the command is valid
     final String command = entry.getStateMachineLogEntry().getLogData().toStringUtf8();
-    if (!CounterCommand.INCREMENT.matches(command)) {
-      return JavaUtils.completeExceptionally(new IllegalArgumentException("Invalid Command: " + command));
-    }
+    //TODO Handle request
+    System.out.println("applyTransaction: " + command);
+
+    myMessage.setTopic("test");
+    myMessage.setContent(command);
+
+    //if (!CounterCommand.INCREMENT.matches(command)) {
+    //  return JavaUtils.completeExceptionally(new IllegalArgumentException("Invalid Command: " + command));
+    //}
     //increment the counter and update term-index
     final TermIndex termIndex = TermIndex.valueOf(entry);
-    final long incremented = incrementCounter(termIndex);
+    final long incremented = incrementCounter(termIndex,myMessage);
 
     //if leader, log the incremented value and the term-index
     if (trx.getServerRole() == RaftPeerRole.LEADER) {
