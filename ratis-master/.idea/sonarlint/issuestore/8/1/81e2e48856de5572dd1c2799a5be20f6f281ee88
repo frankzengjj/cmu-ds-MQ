@@ -1,0 +1,16 @@
+
+h	java:S112ζ"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òιόÿÿÿÿ8§©½ÿ΄1
+{
+java:S2293C"YReplace the type specification in this constructor call with the diamond operator ("<>").(ί€£΅ϊÿÿÿÿ8°©½ÿ΄1
+{
+java:S2293["YReplace the type specification in this constructor call with the diamond operator ("<>").(ί€£΅ϊÿÿÿÿ8°©½ÿ΄1
+|
+java:S2293α"YReplace the type specification in this constructor call with the diamond operator ("<>").(Σ®™ρόÿÿÿÿ8±©½ÿ΄1
+_
+java:S3457¶"AFormat specifiers should be used instead of string concatenation.(Ξ φ–8Λª½ÿ΄1
+]
+java:S1117α":Rename "mylist" which hides the field declared at line 91.(Σ®™ρόÿÿÿÿ8Ωª½ÿ΄1
+P
+java:S1135χ"2Complete the task associated to this TODO comment.(κ¶§8αª½ÿ΄1
+H	java:S106ϊ"+Replace this use of System.out by a logger.(ªϊ¦8βª½ÿ΄1
+Y	java:S125ό"<This block of commented-out lines of code should be removed.(ΰαβ―8γª½ÿ΄1

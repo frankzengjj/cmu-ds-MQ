@@ -11,5 +11,5 @@ import java.util.List;
 @NoArgsConstructor
 public class Partition {
     private String topic;
-    private List<Message> messageList;
+    private List<MyMessage> messageList;
 }

@@ -1,0 +1,22 @@
+
+b	java:S1129"FDefine and throw a dedicated exception instead of using a generic one.(áí±8Ù¥½ÿ´1
+o
+java:S37769"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(áí±8Ü§½ÿ´1
+G	java:S106:"+Replace this use of System.out by a logger.(Õ²ó¡8à§½ÿ´1
+G	java:S106U"+Replace this use of System.out by a logger.(åâàĞ8õ§½ÿ´1
+L	java:S106W"+Replace this use of System.err by a logger.(ı×óúÿÿÿÿ8÷§½ÿ´1
+G	java:S106^"+Replace this use of System.out by a logger.(œãèÁ8ù§½ÿ´1
+X	java:S125h"<This block of commented-out lines of code should be removed.(ã¼öü8ÿ§½ÿ´1
+L	java:S106k"+Replace this use of System.err by a logger.(ä¶½Šşÿÿÿÿ8¨½ÿ´1
+L	java:S106p"+Replace this use of System.err by a logger.( µÅ´úÿÿÿÿ8„¨½ÿ´1
+G	java:S106v"+Replace this use of System.out by a logger.(•¾ïí8‡¨½ÿ´1
+H
+java:S1181‡"%Catch Exception instead of Throwable.(‡˜ÚÚøÿÿÿÿ8‹¨½ÿ´1
+M	java:S106‰"+Replace this use of System.err by a logger.(âÉÀÜüÿÿÿÿ8‘¨½ÿ´1
+M	java:S106Š"+Replace this use of System.err by a logger.(“Èİèúÿÿÿÿ8’¨½ÿ´1
+M	java:S106‹"+Replace this use of System.err by a logger.(âÉÀÜüÿÿÿÿ8“¨½ÿ´1
+M	java:S106Œ"+Replace this use of System.err by a logger.(„­û¯ıÿÿÿÿ8“¨½ÿ´1
+M	java:S106"+Replace this use of System.err by a logger.(âÉÀÜüÿÿÿÿ8“¨½ÿ´1
+M	java:S106"+Replace this use of System.err by a logger.(çª…¼ıÿÿÿÿ8”¨½ÿ´1
+G	java:S106"+Replace this use of System.err by a logger.(±àÄF8”¨½ÿ´1
+H	java:S106"+Replace this use of System.err by a logger.(Ÿ¨‘»8•¨½ÿ´1

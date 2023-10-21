@@ -31,6 +31,12 @@
   <dependencies>
 
     <dependency>
+      <groupId>com.google.protobuf</groupId>
+      <artifactId>protobuf-java</artifactId>
+      <version>3.17.3</version> <!-- Use the version that suits your needs -->
+    </dependency>
+
+    <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.18.30</version>
@@ -209,6 +215,19 @@
           </execution>
         </executions>
       </plugin>
+
+
+      <plugin>
+        <groupId>org.xolstice.maven.plugins</groupId>
+        <artifactId>protobuf-maven-plugin</artifactId>
+        <version>0.6.1</version>
+        <extensions>true</extensions>
+        <configuration>
+          <protoSourceRoot>${project.basedir}/src/main/java/com/cn/prodf</protoSourceRoot>
+          <protocArtifact>com.google.protobuf:protoc:3.2.0:exe:${os.detected.classifier}</protocArtifact>
+        </configuration>
+      </plugin>
+
     </plugins>
   </build>
 </project>

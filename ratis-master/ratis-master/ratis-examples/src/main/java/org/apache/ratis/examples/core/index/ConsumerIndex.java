@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * ConsumerIndex is used to record the index of the message that the consumer has consumed.
@@ -17,5 +18,5 @@ import java.util.HashMap;
 @AllArgsConstructor
 public class ConsumerIndex {
     // key: topic, value: topicConsumerIndex
-    HashMap<String, TopicConsumerIndex> topicConsumerIndexMap;
+    HashMap<String, List<PartitionConsumerIndex>> topicConsumerIndexMap;
 }

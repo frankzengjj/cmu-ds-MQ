@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Message {
+public class MyMessage {
     private String topic;
     private String content;
     private Date generateTime;

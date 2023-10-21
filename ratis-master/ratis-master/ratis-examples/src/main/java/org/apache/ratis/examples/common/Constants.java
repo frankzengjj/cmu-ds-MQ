@@ -52,7 +52,7 @@ public final class Constants {
   static {
     final Properties properties = new Properties();
     //C:\Users\DAZHA\Downloads\ratis-master\ratis-master\ratis-examples\src\main\resources
-    final String conf = "D:/study/CMU/SPT/ratis-master/ratis-master/ratis-examples/src/main/resources/conf.properties";
+    final String conf = "D:/study/CMU/SPT/cmu-ds-MQ/ratis-master/ratis-master/ratis-examples/src/main/resources/conf.properties";
     try(InputStream inputStream = new FileInputStream(conf);
         Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
         BufferedReader bufferedReader = new BufferedReader(reader)) {

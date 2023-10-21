@@ -17,6 +17,7 @@
  */
 package org.apache.ratis.examples.counter.server;
 
+import org.apache.ratis.examples.core.*;
 import org.apache.ratis.examples.counter.CounterCommand;
 import org.apache.ratis.io.MD5Hash;
 import org.apache.ratis.proto.RaftProtos.LogEntryProto;
@@ -45,6 +46,7 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -64,12 +66,13 @@ public class CounterStateMachine extends BaseStateMachine {
     private final TermIndex applied;
     private final int counter;
 
-    private ArrayList<String> mylist = new ArrayList<String>();
+    private Broker broker;
 
-    CounterState(TermIndex applied, int counter, ArrayList<String> mylist) {
+
+    CounterState(TermIndex applied, int counter, Broker broker) {
       this.applied = applied;
       this.counter = counter;
-      this.mylist = mylist;
+      this.broker = broker;
     }
 
     TermIndex getApplied() {
@@ -80,17 +83,19 @@ public class CounterStateMachine extends BaseStateMachine {
       return counter;
     }
 
-    ArrayList<String> getMylist() {
-      return mylist;
+    Broker getBroker() {
+      return broker;
     }
   }
 
   private final SimpleStateMachineStorage storage = new SimpleStateMachineStorage();
   private final AtomicInteger counter = new AtomicInteger(0);
 
-    private ArrayList<String> mylist = new ArrayList<String>();
+  private Broker broker = new Broker();
 
   private final TimeDuration simulatedSlowness;
+
+  private MyMessage myMessage = new MyMessage();
 
   CounterStateMachine(TimeDuration simulatedSlowness) {
     this.simulatedSlowness = simulatedSlowness;
@@ -101,13 +106,13 @@ public class CounterStateMachine extends BaseStateMachine {
 
   /** @return the current state. */
   private synchronized CounterState getState() {
-    return new CounterState(getLastAppliedTermIndex(), counter.get(), mylist);
+    return new CounterState(getLastAppliedTermIndex(), counter.get(), broker);
   }
 
-  private synchronized void updateState(TermIndex applied, int counterValue, ArrayList<String> mylist) {
+  private synchronized void updateState(TermIndex applied, int counterValue,Broker broker) {
     updateLastAppliedTermIndex(applied);
     counter.set(counterValue);
-    this.mylist = mylist;
+    this.broker = broker;
   }
 
   private synchronized int incrementCounter(TermIndex termIndex) {
@@ -120,17 +125,26 @@ public class CounterStateMachine extends BaseStateMachine {
       Thread.currentThread().interrupt();
     }
     updateLastAppliedTermIndex(termIndex);
-    mylist.add(Integer.toString(counter.get()));
-    mylist.add(Integer.toString(counter.get()));
-    mylist.add(Integer.toString(counter.get()));
-    mylist.add(Integer.toString(counter.get()));
-    mylist.add(Integer.toString(counter.get()));
-    mylist.add(Integer.toString(counter.get()));
-    mylist.add(Integer.toString(counter.get()));
-    mylist.add(Integer.toString(counter.get()));
-    mylist.add(Integer.toString(counter.get()));
-    mylist.add(Integer.toString(counter.get()));
-    mylist.add(Integer.toString(counter.get()));
+
+    //TODO default partition index = 0;
+    //1. Build partition
+    int partitionIndex = 0;
+    if(broker.getTopPartitionListMap().containsKey(myMessage.getTopic())) {
+      if (broker.getTopPartitionListMap().get(myMessage.getTopic()).size() < partitionIndex) {
+        for (int i = broker.getTopPartitionListMap().get(myMessage.getTopic()).size(); i < partitionIndex; i++) {
+          broker.getTopPartitionListMap().get(myMessage.getTopic()).add(new Partition());
+        }
+      }
+    }else {
+      List<Partition> partitionList = new ArrayList<Partition>();
+      for (int i = 0; i <= partitionIndex; i++) {
+        partitionList.add(new Partition());
+      }
+    }
+
+    //2. Fill message into partition
+    broker.getTopPartitionListMap().get(myMessage.getTopic()).get(partitionIndex).getMessageList().add(myMessage);
+
     return counter.incrementAndGet();
   }
 
@@ -177,7 +191,7 @@ public class CounterStateMachine extends BaseStateMachine {
     try (ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(
         Files.newOutputStream(snapshotFile.toPath())))) {
       out.writeInt(state.getCounter());
-      out.writeObject(state.getMylist());
+      out.writeObject(state.getBroker());
     } catch (IOException ioe) {
       LOG.warn("Failed to write snapshot file \"" + snapshotFile
           + "\", last applied index=" + state.getApplied());
@@ -222,16 +236,16 @@ public class CounterStateMachine extends BaseStateMachine {
 
     //read the counter value from the snapshot file
     final int counterValue;
-    ArrayList<String> mylist = new ArrayList<String>();
+    Broker broker;
     try (ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(Files.newInputStream(snapshotPath)))) {
       counterValue = in.readInt();
-      mylist = (ArrayList<String>) in.readObject();
+      broker = (Broker) in.readObject();
     } catch (ClassNotFoundException e) {
       throw new RuntimeException(e);
     }
 
     //update state
-    updateState(last, counterValue, mylist);
+    updateState(last, counterValue, broker);
 
     return last.getIndex();
   }
@@ -252,7 +266,9 @@ public class CounterStateMachine extends BaseStateMachine {
     //if (!CounterCommand.GET.matches(command)) {
     //  return JavaUtils.completeExceptionally(new IllegalArgumentException("Invalid Command: " + command));
     //}
-    return CompletableFuture.completedFuture(Message.valueOf(counter.toString() + " " + mylist.toString()));
+    myMessage.setTopic("test");
+    myMessage.setContent(command);
+    return CompletableFuture.completedFuture(Message.valueOf(counter.toString() + " " + broker.toString()));
   }
 
   /**
