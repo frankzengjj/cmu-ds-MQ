@@ -18,6 +18,8 @@
 package org.apache.ratis.examples.counter.server;
 
 import org.apache.ratis.examples.core.*;
+import org.apache.ratis.examples.core.index.ConsumerIndex;
+import org.apache.ratis.examples.core.index.PartitionConsumerIndex;
 import org.apache.ratis.examples.counter.CounterCommand;
 import org.apache.ratis.io.MD5Hash;
 import org.apache.ratis.proto.RaftProtos.LogEntryProto;
@@ -96,7 +98,7 @@ public class CounterStateMachine extends BaseStateMachine {
 
   private MyMessage myMessage = new MyMessage();
 
-  private int partitionIndex = 0;
+  private ConsumerIndex consumerIndex = new ConsumerIndex();
 
   CounterStateMachine(TimeDuration simulatedSlowness) {
     this.simulatedSlowness = simulatedSlowness;
@@ -139,17 +141,22 @@ public class CounterStateMachine extends BaseStateMachine {
     }else {
       List<Partition> partitionList = new ArrayList<Partition>();
       for (int i = 0; i <= partitionIndex; i++) {
-        partitionList.add(new Partition());
+        Partition partition = new Partition();
+        partition.setTopic(myMessage.getTopic());
+        partitionList.add(partition);
+
       }
       broker.getTopPartitionListMap().put(myMessage.getTopic(), partitionList);
     }
 
     //2. Fill message into partition
     if(myMessage.getTopic()!=null) {
-      broker.getTopPartitionListMap().get(myMessage.getTopic()).get(partitionIndex).getMessageList().add(myMessage);
+      broker.getTopPartitionListMap().get(myMessage.getTopic()).get(partitionIndex).getMessageList().add(
+            MyMessage.builder().topic(myMessage.getTopic()).content(myMessage.getContent()).build()
+      );
     }
 
-
+    System.out.println(broker.getTopPartitionListMap());
     return counter.incrementAndGet();
   }
 
@@ -268,12 +275,55 @@ public class CounterStateMachine extends BaseStateMachine {
 
     System.out.println("query: " + command);
 
+    String topic = command.split(" ")[0];
+    int partition = Integer.parseInt(command.split(" ")[1]);
+    String consumerGroupId = command.split(" ")[2];
+    System.out.println(broker);
+    System.out.println(consumerIndex);
+
+    //if broker does not have this topic
+    if(!broker.getTopPartitionListMap().containsKey(topic)){
+      return CompletableFuture.completedFuture(Message.valueOf("No such topic"));
+    }
+    //if broker does not have this partition
+    if(partition >= broker.getTopPartitionListMap().get(topic).size()){
+      return CompletableFuture.completedFuture(Message.valueOf("No such partition"));
+    }
+
+    if(!consumerIndex.getTopicConsumerIndexMap().containsKey(topic)){
+      ArrayList<PartitionConsumerIndex> partitionConsumerIndexList = new ArrayList<PartitionConsumerIndex>();
+      PartitionConsumerIndex partitionConsumerIndex = new PartitionConsumerIndex();
+      partitionConsumerIndex.setTopic(topic);
+      partitionConsumerIndexList.add(partitionConsumerIndex);
+      consumerIndex.getTopicConsumerIndexMap().put(topic,partitionConsumerIndexList);
+    }
+    if (partition >= consumerIndex.getTopicConsumerIndexMap().get(topic).size()) {
+      for(int i = consumerIndex.getTopicConsumerIndexMap().get(topic).size(); i <= partition; i++){
+        PartitionConsumerIndex partitionConsumerIndex = new PartitionConsumerIndex();
+        partitionConsumerIndex.setTopic(topic);
+        consumerIndex.getTopicConsumerIndexMap().get(topic).add(partitionConsumerIndex);
+      }
+    }
+
+    int currentIndex = 0;
+    HashMap<String, Integer> partitionConsumerIndexMap = consumerIndex.getTopicConsumerIndexMap().get(topic).get(partition).getPartitionConsumerIndexMap();
+    if(!partitionConsumerIndexMap.containsKey(consumerGroupId)){
+      partitionConsumerIndexMap.put(consumerGroupId,0);
+    }else{
+        currentIndex = partitionConsumerIndexMap.get(consumerGroupId);
+    }
+    if(currentIndex >= broker.getTopPartitionListMap().get(topic).get(partition).getMessageList().size()){
+      return CompletableFuture.completedFuture(Message.valueOf("No more message"));
+    }
+    partitionConsumerIndexMap.put(consumerGroupId,currentIndex+1);
+    return CompletableFuture.completedFuture(Message.valueOf(broker.getTopPartitionListMap().get(topic).get(partition).getMessageList().get(currentIndex).getContent()));
+
+
     //if (!CounterCommand.GET.matches(command)) {
     //  return JavaUtils.completeExceptionally(new IllegalArgumentException("Invalid Command: " + command));
     //}
-    partitionIndex++;
 
-    return CompletableFuture.completedFuture(Message.valueOf(counter.toString() + " index: " + partitionIndex +" " + broker.toString()));
+    //return CompletableFuture.completedFuture(Message.valueOf(counter.toString() + " index: " + partitionIndex +" " + broker.toString()));
   }
 
   /**
@@ -290,9 +340,10 @@ public class CounterStateMachine extends BaseStateMachine {
     final String command = entry.getStateMachineLogEntry().getLogData().toStringUtf8();
     //TODO Handle request
     System.out.println("applyTransaction: " + command);
-
-    myMessage.setTopic("test");
-    myMessage.setContent(command);
+    String topic = command.split(" ")[0];
+    String content = command.split(" ")[1];
+    myMessage.setTopic(topic);
+    myMessage.setContent(content);
 
     //if (!CounterCommand.INCREMENT.matches(command)) {
     //  return JavaUtils.completeExceptionally(new IllegalArgumentException("Invalid Command: " + command));

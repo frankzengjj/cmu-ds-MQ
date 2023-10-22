@@ -58,16 +58,20 @@ public final class CounterClient implements Closeable {
     System.out.printf("Sending %d %s command(s) using the %s ...%n",
         increment, CounterCommand.INCREMENT, blocking? "BlockingApi": "AsyncApi");
     final List<Future<RaftClientReply>> futures = new ArrayList<>(increment);
-
-    Message message = Message.valueOf("ahha");
+    List<Message> messageList = new ArrayList<>();
+    for(int i = 0; i < 10; i++){
+      Message message = Message.valueOf("topic0 message"+ i);
+      messageList.add(message);
+    }
     //send INCREMENT command(s)
     if (blocking) {
       // use BlockingApi
       final ExecutorService executor = Executors.newFixedThreadPool(10);
       for (int i = 0; i < increment; i++) {
+        int finalI = i;
         final Future<RaftClientReply> f = executor.submit(
             () -> client.io().send(
-                    message
+                messageList.get(finalI)
                     //CounterCommand.INCREMENT.getMessage()
             ));
         futures.add(f);
@@ -77,7 +81,7 @@ public final class CounterClient implements Closeable {
       // use AsyncApi
       for (int i = 0; i < increment; i++) {
         final Future<RaftClientReply> f = client.async().send(
-                message
+            messageList.get(i)
                 //CounterCommand.INCREMENT.getMessage()
         );
         futures.add(f);
@@ -94,9 +98,9 @@ public final class CounterClient implements Closeable {
         System.err.println("Failed " + reply);
       }
     }
-
+    Message queryMessage = Message.valueOf("topic0 0 consumerGroup0");
     //send a GET command and print the reply
-    final RaftClientReply reply = client.io().sendReadOnly(CounterCommand.GET.getMessage());
+    final RaftClientReply reply = client.io().sendReadOnly(queryMessage);
     final String count = reply.getMessage().getContent().toStringUtf8();
     System.out.println("Current counter value: " + count);
 
@@ -108,8 +112,10 @@ public final class CounterClient implements Closeable {
       System.out.println((p.getId()));
       final Future<RaftClientReply> f = CompletableFuture.supplyAsync(() -> {
                 try {
+                  //topic0 partition0
+
                   //return client.io().sendReadOnly(CounterCommand.GET.getMessage(), p.getId());
-                  return client.io().sendReadOnly(message, p.getId());
+                  return client.io().sendReadOnly(queryMessage, p.getId());
                 } catch (IOException e) {
                   System.err.println("Failed read-only request");
                   return RaftClientReply.newBuilder().setSuccess(false).build();

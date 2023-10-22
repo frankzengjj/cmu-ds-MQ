@@ -18,5 +18,5 @@ import java.util.List;
 @AllArgsConstructor
 public class ConsumerIndex {
     // key: topic, value: topicConsumerIndex
-    HashMap<String, List<PartitionConsumerIndex>> topicConsumerIndexMap = new HashMap<>();
+    private HashMap<String, List<PartitionConsumerIndex>> topicConsumerIndexMap = new HashMap<>();
 }

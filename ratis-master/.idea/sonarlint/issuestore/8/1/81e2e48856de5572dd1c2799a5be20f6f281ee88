@@ -1,16 +1,27 @@
 
-h	java:S112æ"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8§©½ÿ´1
-{
-java:S2293C"YReplace the type specification in this constructor call with the diamond operator ("<>").(ß€£¡úÿÿÿÿ8°©½ÿ´1
-{
-java:S2293["YReplace the type specification in this constructor call with the diamond operator ("<>").(ß€£¡úÿÿÿÿ8°©½ÿ´1
-|
-java:S2293á"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ó®™ñüÿÿÿÿ8±©½ÿ´1
+h	java:S112ù"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8Œö¨Ÿµ1
+w
+java:S2293Œ"YReplace the type specification in this constructor call with the diamond operator ("<>").(«ê÷„8Žö¨Ÿµ1
+e
+java:S1117„"BRename "partitionIndex" which hides the field declared at line 99.(ô§´€úÿÿÿÿ8€é¶Ÿµ1
+^	java:S125‚"<This block of commented-out lines of code should be removed.(§£¬øÿÿÿÿ8´ö¨Ÿµ1
+U
+java:S1135‚"2Complete the task associated to this TODO comment.(§£¬øÿÿÿÿ8´ö¨Ÿµ1
+v
+java:S2118Ç"XMake the "org.apache.ratis.examples.core.Broker" class "Serializable" or don't write it.(†îÀê8ºö¨Ÿµ1
 _
-java:S3457¶"AFormat specifiers should be used instead of string concatenation.(Î ö–8Ëª½ÿ´1
-]
-java:S1117á":Rename "mylist" which hides the field declared at line 91.(Ó®™ñüÿÿÿÿ8Ùª½ÿ´1
+java:S3457É"AFormat specifiers should be used instead of string concatenation.(Î ö–8ºö¨Ÿµ1
+X
+java:S1117ô":Rename "broker" which hides the field declared at line 93.(öƒ’‡8¼ö¨Ÿµ1
 P
-java:S1135÷"2Complete the task associated to this TODO comment.(ê¶§š8áª½ÿ´1
-H	java:S106ú"+Replace this use of System.out by a logger.(ªú¦8âª½ÿ´1
-Y	java:S125ü"<This block of commented-out lines of code should be removed.(àáâ¯8ãª½ÿ´1
+java:S1135Š"2Complete the task associated to this TODO comment.(ê¶§š8¾ö¨Ÿµ1
+H	java:S106"+Replace this use of System.out by a logger.(ªú¦8¾ö¨Ÿµ1
+Y	java:S125"<This block of commented-out lines of code should be removed.(àáâ¯8¾ö¨Ÿµ1
+M	java:S106¤"+Replace this use of System.out by a logger.(‡÷úÿÿÿÿ8¿ö¨Ÿµ1
+O
+java:S1135£"2Complete the task associated to this TODO comment.(ï¼±S8¿ö¨Ÿµ1
+^	java:S125©"<This block of commented-out lines of code should be removed.(³ÛÉ¿þÿÿÿÿ8¿ö¨Ÿµ1
+Y
+java:S1128$"<Remove this unused import 'org.apache.ratis.util.JavaUtils'.(ç‹íœ8Ð¹Ÿµ1
+P
+java:S11281".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ8Ð¹Ÿµ1
