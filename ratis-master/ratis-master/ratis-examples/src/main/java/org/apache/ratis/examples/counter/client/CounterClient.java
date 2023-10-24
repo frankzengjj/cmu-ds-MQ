@@ -92,8 +92,8 @@ public final class CounterClient implements Closeable {
     for (Future<RaftClientReply> f : futures) {
       final RaftClientReply reply = f.get();
       if (reply.isSuccess()) {
-        final String count = reply.getMessage().getContent().toStringUtf8();
-        System.out.println("Counter is incremented to " + count);
+        final String response = reply.getMessage().getContent().toStringUtf8();
+        System.out.println("Response is " + response);
       } else {
         System.err.println("Failed " + reply);
       }
@@ -102,8 +102,8 @@ public final class CounterClient implements Closeable {
     //send a GET command and print the reply
     //final RaftClientReply reply = client.io().sendReadOnly(queryMessage);
     final RaftClientReply reply = client.io().send(queryMessage);
-    final String count = reply.getMessage().getContent().toStringUtf8();
-    System.out.println("Current counter value: " + count);
+    final String response = reply.getMessage().getContent().toStringUtf8();
+    System.out.println("Response: " + response);
 
     // using Linearizable Read
     futures.clear();
@@ -113,9 +113,8 @@ public final class CounterClient implements Closeable {
       System.out.println((p.getId()));
       final Future<RaftClientReply> f = CompletableFuture.supplyAsync(() -> {
                 try {
-                  //topic0 partition0
-
-                  //return client.io().sendReadOnly(CounterCommand.GET.getMessage(), p.getId());
+                  // notes: read-only request can not synchrnize with all brokers
+                  // but sendReadOnly can sent to any broker not only leader
                   return client.io().sendReadOnly(queryMessage, p.getId());
                 } catch (IOException e) {
                   System.err.println("Failed read-only request");
@@ -128,8 +127,8 @@ public final class CounterClient implements Closeable {
                 }
                 final long endTime = System.currentTimeMillis();
                 final long elapsedSec = (endTime-startTime) / 1000;
-                final String countValue = r.getMessage().getContent().toStringUtf8();
-                System.out.println("read from " + p.getId() + " and get counter value: " + countValue
+                final String res = r.getMessage().getContent().toStringUtf8();
+                System.out.println("read from " + p.getId() + " and get response: " + res
                     + ", time elapsed: " + elapsedSec + " seconds");
               });
       futures.add(f);

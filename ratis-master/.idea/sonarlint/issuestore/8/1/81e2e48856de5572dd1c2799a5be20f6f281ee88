@@ -1,29 +1,31 @@
 
-h	java:S112€"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ƒ‚Í¦µ1
+h	java:S112»"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8¸ ýýµ1
+v
+java:S2293—"YReplace the type specification in this constructor call with the diamond operator ("<>").(•Óß]8º ýýµ1
 w
-java:S2293Ž"YReplace the type specification in this constructor call with the diamond operator ("<>").(«ê÷„8…‚Í¦µ1
-v
-java:S2293¦"YReplace the type specification in this constructor call with the diamond operator ("<>").(•Óß]8…‚Í¦µ1
-^	java:S125„"<This block of commented-out lines of code should be removed.(§£¬øÿÿÿÿ8Ä‚Í¦µ1
+java:S2293É"YReplace the type specification in this constructor call with the diamond operator ("<>").(«ê÷„8º ýýµ1
+X	java:S125e"<This block of commented-out lines of code should be removed.(Í¬¥Í8ÿ ýýµ1
+H	java:S106…"+Replace this use of System.out by a logger.(ªú¦8¡ýýµ1
+G	java:S106Š"+Replace this use of System.out by a logger.(µåè,8¡ýýµ1
+M	java:S106‹"+Replace this use of System.out by a logger.(œîÐùÿÿÿÿÿ8¡ýýµ1
+^	java:S125¿"<This block of commented-out lines of code should be removed.(§£¬øÿÿÿÿ8‡¡ýýµ1
 U
-java:S1135„"2Complete the task associated to this TODO comment.(§£¬øÿÿÿÿ8Ä‚Í¦µ1
-H	java:S106Ÿ"+Replace this use of System.out by a logger.(›Çò£8Æ‚Í¦µ1
-v
-java:S2118Î"XMake the "org.apache.ratis.examples.core.Broker" class "Serializable" or don't write it.(†îÀê8É‚Í¦µ1
+java:S1135¿"2Complete the task associated to this TODO comment.(§£¬øÿÿÿÿ8ˆ¡ýýµ1
+H	java:S106Ú"+Replace this use of System.out by a logger.(›Çò£8‹¡ýýµ1
 _
-java:S3457Ð"AFormat specifiers should be used instead of string concatenation.(Î ö–8É‚Í¦µ1
+java:S3457‹"AFormat specifiers should be used instead of string concatenation.(Î ö–8Ž¡ýýµ1
 X
-java:S1117û":Rename "broker" which hides the field declared at line 95.(öƒ’‡8Ë‚Í¦µ1
+java:S1117¶":Rename "broker" which hides the field declared at line 95.(öƒ’‡8¡ýýµ1
 P
-java:S1135‘"2Complete the task associated to this TODO comment.(ê¶§š8Ì‚Í¦µ1
-H	java:S106”"+Replace this use of System.out by a logger.(ªú¦8Ì‚Í¦µ1
-G	java:S106™"+Replace this use of System.out by a logger.(µåè,8Í‚Í¦µ1
-H	java:S106š"+Replace this use of System.out by a logger.(…ÉÙ8Í‚Í¦µ1
-Y	java:S125Â"<This block of commented-out lines of code should be removed.(àáâ¯8Ð‚Í¦µ1
-Y	java:S125Æ"<This block of commented-out lines of code should be removed.(Ê£‘®8Ð‚Í¦µ1
-M	java:S106Ö"+Replace this use of System.out by a logger.(‡÷úÿÿÿÿ8Ñ‚Í¦µ1
+java:S1135Ë"2Complete the task associated to this TODO comment.(ê¶§š8’¡ýýµ1
+M	java:S106Î"+Replace this use of System.out by a logger.(·ù‹÷øÿÿÿÿ8’¡ýýµ1
+G	java:S106Ð"+Replace this use of System.out by a logger.(µåè,8—¡ýýµ1
+M	java:S106Ñ"+Replace this use of System.out by a logger.(œîÐùÿÿÿÿÿ8—¡ýýµ1
+M	java:S106ä"+Replace this use of System.out by a logger.(‡÷úÿÿÿÿ8™¡ýýµ1
 O
-java:S1135Õ"2Complete the task associated to this TODO comment.(ï¼±S8Ñ‚Í¦µ1
-^	java:S125Ü"<This block of commented-out lines of code should be removed.(³ÛÉ¿þÿÿÿÿ8Ò‚Í¦µ1
+java:S1135ã"2Complete the task associated to this TODO comment.(ï¼±S8™¡ýýµ1
+^	java:S125î"<This block of commented-out lines of code should be removed.(³ÛÉ¿þÿÿÿÿ8š¡ýýµ1
+l
+java:S1128"ORemove this unused import 'org.apache.ratis.examples.core.index.ConsumerIndex'.(½±µþ8›¡ýýµ1
 Y
-java:S1128&"<Remove this unused import 'org.apache.ratis.util.JavaUtils'.(ç‹íœ8Ò‚Í¦µ1
+java:S1128&"<Remove this unused import 'org.apache.ratis.util.JavaUtils'.(ç‹íœ8›¡ýýµ1

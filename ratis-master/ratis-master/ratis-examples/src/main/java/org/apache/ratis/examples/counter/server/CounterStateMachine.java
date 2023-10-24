@@ -67,21 +67,15 @@ public class CounterStateMachine extends BaseStateMachine {
   /** The state of the {@link CounterStateMachine}. */
   static class CounterState {
     private final TermIndex applied;
-    private final int counter;
     private Broker broker;
 
-    CounterState(TermIndex applied, int counter, Broker broker) {
+    CounterState(TermIndex applied, Broker broker) {
       this.applied = applied;
-      this.counter = counter;
       this.broker = broker;
     }
 
     TermIndex getApplied() {
       return applied;
-    }
-
-    int getCounter() {
-      return counter;
     }
 
     Broker getBroker() {
@@ -90,7 +84,6 @@ public class CounterStateMachine extends BaseStateMachine {
   }
 
   private final SimpleStateMachineStorage storage = new SimpleStateMachineStorage();
-  private final AtomicInteger counter = new AtomicInteger(0);
 
   private Broker broker = new Broker();
 
@@ -98,7 +91,6 @@ public class CounterStateMachine extends BaseStateMachine {
 
   private MyMessage myMessage = new MyMessage();
 
-  //private ConsumerIndex consumerIndex = new ConsumerIndex();
 
   CounterStateMachine(TimeDuration simulatedSlowness) {
     this.simulatedSlowness = simulatedSlowness;
@@ -109,12 +101,11 @@ public class CounterStateMachine extends BaseStateMachine {
 
   /** @return the current state. */
   private synchronized CounterState getState() {
-    return new CounterState(getLastAppliedTermIndex(), counter.get(), broker);
+    return new CounterState(getLastAppliedTermIndex(),  broker);
   }
 
-  private synchronized void updateState(TermIndex applied, int counterValue,Broker broker) {
+  private synchronized void updateState(TermIndex applied, Broker broker) {
     updateLastAppliedTermIndex(applied);
-    counter.set(counterValue);
     this.broker = broker;
   }
 
@@ -177,7 +168,7 @@ public class CounterStateMachine extends BaseStateMachine {
 
   }
 
-  private synchronized int incrementCounter(TermIndex termIndex,MyMessage myMessage){
+  private synchronized String incrementCounter(TermIndex termIndex,MyMessage myMessage){
     try {
       if (!simulatedSlowness.equals(TimeDuration.ZERO)) {
         simulatedSlowness.sleep();
@@ -216,7 +207,7 @@ public class CounterStateMachine extends BaseStateMachine {
     }
 
     System.out.println(broker.getTopPartitionListMap());
-    return counter.incrementAndGet();
+    return broker.toString();
   }
 
   /**
@@ -261,7 +252,6 @@ public class CounterStateMachine extends BaseStateMachine {
     //write the counter value into the snapshot file
     try (ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(
         Files.newOutputStream(snapshotFile.toPath())))) {
-      out.writeInt(state.getCounter());
       out.writeObject(state.getBroker());
     } catch (IOException ioe) {
       LOG.warn("Failed to write snapshot file \"" + snapshotFile
@@ -306,16 +296,14 @@ public class CounterStateMachine extends BaseStateMachine {
     final TermIndex last = SimpleStateMachineStorage.getTermIndexFromSnapshotFile(snapshotPath.toFile());
 
     //read the counter value from the snapshot file
-    final int counterValue;
     Broker broker;
     try (ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(Files.newInputStream(snapshotPath)))) {
-      counterValue = in.readInt();
       broker = (Broker) in.readObject();
     } catch (ClassNotFoundException e) {
       throw new RuntimeException(e);
     }
     //update state
-    updateState(last, counterValue, broker);
+    updateState(last, broker);
 
     return last.getIndex();
   }
@@ -333,59 +321,10 @@ public class CounterStateMachine extends BaseStateMachine {
 
     System.out.println("query!: " + command);
 
-    //String topic = command.split(" ")[0];
-    //int partition = Integer.parseInt(command.split(" ")[1]);
-    //String consumerGroupId = command.split(" ")[2];
     System.out.println(broker);
     System.out.println(broker.getConsumerIndex());
 
-    //if broker does not have this topic
-    //if(!broker.getTopPartitionListMap().containsKey(topic)){
-    //  return CompletableFuture.completedFuture(Message.valueOf("No such topic"));
-    //}
-    ////if broker does not have this partition
-    //if(partition >= broker.getTopPartitionListMap().get(topic).size()){
-    //  return CompletableFuture.completedFuture(Message.valueOf("No such partition"));
-    //}
-    //
-    //if(!broker.getConsumerIndex().getTopicConsumerIndexMap().containsKey(topic)){
-    //  ArrayList<PartitionConsumerIndex> partitionConsumerIndexList = new ArrayList<PartitionConsumerIndex>();
-    //  PartitionConsumerIndex partitionConsumerIndex = new PartitionConsumerIndex();
-    //  partitionConsumerIndex.setTopic(topic);
-    //  partitionConsumerIndexList.add(partitionConsumerIndex);
-    //  broker.getConsumerIndex().getTopicConsumerIndexMap().put(topic,partitionConsumerIndexList);
-    //}
-    //if (partition >= broker.getConsumerIndex().getTopicConsumerIndexMap().get(topic).size()) {
-    //  for(int i = broker.getConsumerIndex().getTopicConsumerIndexMap().get(topic).size(); i <= partition; i++){
-    //    PartitionConsumerIndex partitionConsumerIndex = new PartitionConsumerIndex();
-    //    partitionConsumerIndex.setTopic(topic);
-    //    broker.getConsumerIndex().getTopicConsumerIndexMap().get(topic).add(partitionConsumerIndex);
-    //  }
-    //}
-    //
-    //int currentIndex = 0;
-    //HashMap<String, Integer> partitionConsumerIndexMap = broker.getConsumerIndex().getTopicConsumerIndexMap().get(topic).get(partition).getPartitionConsumerIndexMap();
-    //if(!partitionConsumerIndexMap.containsKey(consumerGroupId)){
-    //  partitionConsumerIndexMap.put(consumerGroupId,0);
-    //}else{
-    //    currentIndex = partitionConsumerIndexMap.get(consumerGroupId);
-    //}
-    //if(currentIndex >= broker.getTopPartitionListMap().get(topic).get(partition).getMessageList().size()){
-    //  return CompletableFuture.completedFuture(Message.valueOf("No more message"));
-    //}
-    //partitionConsumerIndexMap.put(consumerGroupId,currentIndex+1);
-    //
-    //incrementIndex(getLastAppliedTermIndex(),broker);
-    //
-    //return CompletableFuture.completedFuture(Message.valueOf(broker.getTopPartitionListMap().get(topic).get(partition).getMessageList().get(currentIndex).getContent()));
 
-
-
-    //if (!CounterCommand.GET.matches(command)) {
-    //  return JavaUtils.completeExceptionally(new IllegalArgumentException("Invalid Command: " + command));
-    //}
-
-    //return CompletableFuture.completedFuture(Message.valueOf(counter.toString() + " index: " + partitionIndex +" " + broker.toString()));
     return CompletableFuture.completedFuture(Message.valueOf("query" + broker.toString()));
   }
 
@@ -401,12 +340,10 @@ public class CounterStateMachine extends BaseStateMachine {
 
     //check if the command is valid
     final String command = entry.getStateMachineLogEntry().getLogData().toStringUtf8();
-    //TODO Handle request
+    // Handle request
     System.out.println("applyTransaction: " + command);
     String topic = command.split(" ")[0];
     String content = command.split(" ")[1];
-
-
 
 
     myMessage.setTopic(topic);
@@ -417,20 +354,21 @@ public class CounterStateMachine extends BaseStateMachine {
     //}
     //increment the counter and update term-index
     final TermIndex termIndex = TermIndex.valueOf(entry);
-    String incremented = "";
+    String reply = "";
+    // add message
     if(!topic.equals("query")) {
-      incremented = Integer.toString(incrementCounter(termIndex, myMessage));
+      reply = incrementCounter(termIndex, myMessage);
+    //  read message
     }else{
-      System.out.println("hhhhhh");
-      incremented = incrementIndex(termIndex,command);
+      reply = incrementIndex(termIndex,command);
     }
 
     //if leader, log the incremented value and the term-index
     if (trx.getServerRole() == RaftPeerRole.LEADER) {
-      LOG.info("{}: Increment to {}", termIndex, incremented);
+      LOG.info("{}: Reply is {}", termIndex, reply);
     }
 
     //return the new value of the counter to the client
-    return CompletableFuture.completedFuture(Message.valueOf(String.valueOf(incremented)));
+    return CompletableFuture.completedFuture(Message.valueOf(reply));
   }
 }

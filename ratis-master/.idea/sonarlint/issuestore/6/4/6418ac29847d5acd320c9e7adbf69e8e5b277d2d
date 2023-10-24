@@ -1,23 +1,24 @@
 
-b	java:S1129"FDefine and throw a dedicated exception instead of using a generic one.(áí±8ÑÜ¯¤µ1
+b	java:S1129"FDefine and throw a dedicated exception instead of using a generic one.(áí±8¬¤ãıµ1
 o
-java:S37769"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(áí±8ÒÌÜ¦µ1
-G	java:S106:"+Replace this use of System.out by a logger.(Õ²ó¡8İ¯¤µ1
-G	java:S106`"+Replace this use of System.out by a logger.(åâàĞ8‚Á¤µ1
-L	java:S106b"+Replace this use of System.err by a logger.(ı×óúÿÿÿÿ8“İ¯¤µ1
-G	java:S106i"+Replace this use of System.out by a logger.(œãèÁ8¾—È¤µ1
-G	java:S106p"+Replace this use of System.out by a logger.(Á×Ş¨8µ¬Ü¤µ1
-X	java:S125u"<This block of commented-out lines of code should be removed.(ã¼öü8ÌµÚ¥µ1
-L	java:S106x"+Replace this use of System.err by a logger.(ä¶½Šşÿÿÿÿ8”İ¯¤µ1
-L	java:S106}"+Replace this use of System.err by a logger.( µÅ´úÿÿÿÿ8•İ¯¤µ1
-H	java:S106ƒ"+Replace this use of System.out by a logger.(•¾ïí8×ÌÜ¦µ1
+java:S37769"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(áí±8ß¤ãıµ1
+G	java:S106:"+Replace this use of System.out by a logger.(Õ²ó¡8à¤ãıµ1
+G	java:S106`"+Replace this use of System.out by a logger.(åâàĞ8ä¤ãıµ1
+L	java:S106b"+Replace this use of System.err by a logger.(ı×óúÿÿÿÿ8ä¤ãıµ1
+X	java:S125g"<This block of commented-out lines of code should be removed.(‚¼ôÑ8ä¤ãıµ1
+G	java:S106j"+Replace this use of System.out by a logger.(œãèÁ8å¤ãıµ1
+G	java:S106q"+Replace this use of System.out by a logger.(Á×Ş¨8å¤ãıµ1
+X	java:S125v"<This block of commented-out lines of code should be removed.(ã¼öü8æ¤ãıµ1
+L	java:S106y"+Replace this use of System.err by a logger.(ä¶½Šşÿÿÿÿ8æ¤ãıµ1
+L	java:S106~"+Replace this use of System.err by a logger.( µÅ´úÿÿÿÿ8ç¤ãıµ1
+H	java:S106„"+Replace this use of System.out by a logger.(•¾ïí8ç¤ãıµ1
 H
-java:S1181”"%Catch Exception instead of Throwable.(‡˜ÚÚøÿÿÿÿ8”İ¯¤µ1
-M	java:S106–"+Replace this use of System.err by a logger.(âÉÀÜüÿÿÿÿ8•İ¯¤µ1
-M	java:S106—"+Replace this use of System.err by a logger.(“Èİèúÿÿÿÿ8•İ¯¤µ1
-M	java:S106˜"+Replace this use of System.err by a logger.(âÉÀÜüÿÿÿÿ8–İ¯¤µ1
-M	java:S106™"+Replace this use of System.err by a logger.(„­û¯ıÿÿÿÿ8–İ¯¤µ1
-M	java:S106š"+Replace this use of System.err by a logger.(âÉÀÜüÿÿÿÿ8–İ¯¤µ1
-M	java:S106›"+Replace this use of System.err by a logger.(çª…¼ıÿÿÿÿ8–İ¯¤µ1
-G	java:S106œ"+Replace this use of System.err by a logger.(±àÄF8–İ¯¤µ1
-H	java:S106"+Replace this use of System.err by a logger.(Ÿ¨‘»8ÙÌÜ¦µ1
+java:S1181•"%Catch Exception instead of Throwable.(‡˜ÚÚøÿÿÿÿ8è¤ãıµ1
+M	java:S106—"+Replace this use of System.err by a logger.(âÉÀÜüÿÿÿÿ8ê¤ãıµ1
+M	java:S106˜"+Replace this use of System.err by a logger.(“Èİèúÿÿÿÿ8ê¤ãıµ1
+M	java:S106™"+Replace this use of System.err by a logger.(âÉÀÜüÿÿÿÿ8ê¤ãıµ1
+M	java:S106š"+Replace this use of System.err by a logger.(„­û¯ıÿÿÿÿ8ê¤ãıµ1
+M	java:S106›"+Replace this use of System.err by a logger.(âÉÀÜüÿÿÿÿ8ë¤ãıµ1
+M	java:S106œ"+Replace this use of System.err by a logger.(çª…¼ıÿÿÿÿ8ë¤ãıµ1
+G	java:S106"+Replace this use of System.err by a logger.(±àÄF8ë¤ãıµ1
+H	java:S106"+Replace this use of System.err by a logger.(Ÿ¨‘»8ë¤ãıµ1
