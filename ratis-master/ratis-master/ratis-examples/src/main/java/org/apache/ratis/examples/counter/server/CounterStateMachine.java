@@ -98,7 +98,7 @@ public class CounterStateMachine extends BaseStateMachine {
 
   private MyMessage myMessage = new MyMessage();
 
-  private ConsumerIndex consumerIndex = new ConsumerIndex();
+  //private ConsumerIndex consumerIndex = new ConsumerIndex();
 
   CounterStateMachine(TimeDuration simulatedSlowness) {
     this.simulatedSlowness = simulatedSlowness;
@@ -116,6 +116,65 @@ public class CounterStateMachine extends BaseStateMachine {
     updateLastAppliedTermIndex(applied);
     counter.set(counterValue);
     this.broker = broker;
+  }
+
+  private synchronized String incrementIndex(TermIndex termIndex,String command){
+    try {
+      if (!simulatedSlowness.equals(TimeDuration.ZERO)) {
+        simulatedSlowness.sleep();
+      }
+    } catch (InterruptedException e) {
+      LOG.warn("{}: get interrupted in simulated slowness sleep before apply transaction", this);
+      Thread.currentThread().interrupt();
+    }
+    updateLastAppliedTermIndex(termIndex);
+
+
+    System.out.println("query: " + command);
+
+    String topic = command.split(" ")[1];
+    int partition = Integer.parseInt(command.split(" ")[2]);
+    String consumerGroupId = command.split(" ")[3];
+    System.out.println(broker);
+    System.out.println(broker.getConsumerIndex());
+
+    //if broker does not have this topic
+    if(!broker.getTopPartitionListMap().containsKey(topic)){
+      return "No such topic";
+    }
+    //if broker does not have this partition
+    if(partition >= broker.getTopPartitionListMap().get(topic).size()){
+      return "No such partition";
+    }
+
+    if(!broker.getConsumerIndex().getTopicConsumerIndexMap().containsKey(topic)){
+      ArrayList<PartitionConsumerIndex> partitionConsumerIndexList = new ArrayList<PartitionConsumerIndex>();
+      PartitionConsumerIndex partitionConsumerIndex = new PartitionConsumerIndex();
+      partitionConsumerIndex.setTopic(topic);
+      partitionConsumerIndexList.add(partitionConsumerIndex);
+      broker.getConsumerIndex().getTopicConsumerIndexMap().put(topic,partitionConsumerIndexList);
+    }
+    if (partition >= broker.getConsumerIndex().getTopicConsumerIndexMap().get(topic).size()) {
+      for(int i = broker.getConsumerIndex().getTopicConsumerIndexMap().get(topic).size(); i <= partition; i++){
+        PartitionConsumerIndex partitionConsumerIndex = new PartitionConsumerIndex();
+        partitionConsumerIndex.setTopic(topic);
+        broker.getConsumerIndex().getTopicConsumerIndexMap().get(topic).add(partitionConsumerIndex);
+      }
+    }
+
+    int currentIndex = 0;
+    HashMap<String, Integer> partitionConsumerIndexMap = broker.getConsumerIndex().getTopicConsumerIndexMap().get(topic).get(partition).getPartitionConsumerIndexMap();
+    if(!partitionConsumerIndexMap.containsKey(consumerGroupId)){
+      partitionConsumerIndexMap.put(consumerGroupId,0);
+    }else{
+        currentIndex = partitionConsumerIndexMap.get(consumerGroupId);
+    }
+    if(currentIndex >= broker.getTopPartitionListMap().get(topic).get(partition).getMessageList().size()){
+      return "No more message";
+    }
+    partitionConsumerIndexMap.put(consumerGroupId,currentIndex+1);
+    return broker.getTopPartitionListMap().get(topic).get(partition).getMessageList().get(currentIndex).getContent();
+
   }
 
   private synchronized int incrementCounter(TermIndex termIndex,MyMessage myMessage){
@@ -255,7 +314,6 @@ public class CounterStateMachine extends BaseStateMachine {
     } catch (ClassNotFoundException e) {
       throw new RuntimeException(e);
     }
-
     //update state
     updateState(last, counterValue, broker);
 
@@ -273,50 +331,54 @@ public class CounterStateMachine extends BaseStateMachine {
     //TODO handle request
     final String command = request.getContent().toStringUtf8();
 
-    System.out.println("query: " + command);
+    System.out.println("query!: " + command);
 
-    String topic = command.split(" ")[0];
-    int partition = Integer.parseInt(command.split(" ")[1]);
-    String consumerGroupId = command.split(" ")[2];
+    //String topic = command.split(" ")[0];
+    //int partition = Integer.parseInt(command.split(" ")[1]);
+    //String consumerGroupId = command.split(" ")[2];
     System.out.println(broker);
-    System.out.println(consumerIndex);
+    System.out.println(broker.getConsumerIndex());
 
     //if broker does not have this topic
-    if(!broker.getTopPartitionListMap().containsKey(topic)){
-      return CompletableFuture.completedFuture(Message.valueOf("No such topic"));
-    }
-    //if broker does not have this partition
-    if(partition >= broker.getTopPartitionListMap().get(topic).size()){
-      return CompletableFuture.completedFuture(Message.valueOf("No such partition"));
-    }
+    //if(!broker.getTopPartitionListMap().containsKey(topic)){
+    //  return CompletableFuture.completedFuture(Message.valueOf("No such topic"));
+    //}
+    ////if broker does not have this partition
+    //if(partition >= broker.getTopPartitionListMap().get(topic).size()){
+    //  return CompletableFuture.completedFuture(Message.valueOf("No such partition"));
+    //}
+    //
+    //if(!broker.getConsumerIndex().getTopicConsumerIndexMap().containsKey(topic)){
+    //  ArrayList<PartitionConsumerIndex> partitionConsumerIndexList = new ArrayList<PartitionConsumerIndex>();
+    //  PartitionConsumerIndex partitionConsumerIndex = new PartitionConsumerIndex();
+    //  partitionConsumerIndex.setTopic(topic);
+    //  partitionConsumerIndexList.add(partitionConsumerIndex);
+    //  broker.getConsumerIndex().getTopicConsumerIndexMap().put(topic,partitionConsumerIndexList);
+    //}
+    //if (partition >= broker.getConsumerIndex().getTopicConsumerIndexMap().get(topic).size()) {
+    //  for(int i = broker.getConsumerIndex().getTopicConsumerIndexMap().get(topic).size(); i <= partition; i++){
+    //    PartitionConsumerIndex partitionConsumerIndex = new PartitionConsumerIndex();
+    //    partitionConsumerIndex.setTopic(topic);
+    //    broker.getConsumerIndex().getTopicConsumerIndexMap().get(topic).add(partitionConsumerIndex);
+    //  }
+    //}
+    //
+    //int currentIndex = 0;
+    //HashMap<String, Integer> partitionConsumerIndexMap = broker.getConsumerIndex().getTopicConsumerIndexMap().get(topic).get(partition).getPartitionConsumerIndexMap();
+    //if(!partitionConsumerIndexMap.containsKey(consumerGroupId)){
+    //  partitionConsumerIndexMap.put(consumerGroupId,0);
+    //}else{
+    //    currentIndex = partitionConsumerIndexMap.get(consumerGroupId);
+    //}
+    //if(currentIndex >= broker.getTopPartitionListMap().get(topic).get(partition).getMessageList().size()){
+    //  return CompletableFuture.completedFuture(Message.valueOf("No more message"));
+    //}
+    //partitionConsumerIndexMap.put(consumerGroupId,currentIndex+1);
+    //
+    //incrementIndex(getLastAppliedTermIndex(),broker);
+    //
+    //return CompletableFuture.completedFuture(Message.valueOf(broker.getTopPartitionListMap().get(topic).get(partition).getMessageList().get(currentIndex).getContent()));
 
-    if(!consumerIndex.getTopicConsumerIndexMap().containsKey(topic)){
-      ArrayList<PartitionConsumerIndex> partitionConsumerIndexList = new ArrayList<PartitionConsumerIndex>();
-      PartitionConsumerIndex partitionConsumerIndex = new PartitionConsumerIndex();
-      partitionConsumerIndex.setTopic(topic);
-      partitionConsumerIndexList.add(partitionConsumerIndex);
-      consumerIndex.getTopicConsumerIndexMap().put(topic,partitionConsumerIndexList);
-    }
-    if (partition >= consumerIndex.getTopicConsumerIndexMap().get(topic).size()) {
-      for(int i = consumerIndex.getTopicConsumerIndexMap().get(topic).size(); i <= partition; i++){
-        PartitionConsumerIndex partitionConsumerIndex = new PartitionConsumerIndex();
-        partitionConsumerIndex.setTopic(topic);
-        consumerIndex.getTopicConsumerIndexMap().get(topic).add(partitionConsumerIndex);
-      }
-    }
-
-    int currentIndex = 0;
-    HashMap<String, Integer> partitionConsumerIndexMap = consumerIndex.getTopicConsumerIndexMap().get(topic).get(partition).getPartitionConsumerIndexMap();
-    if(!partitionConsumerIndexMap.containsKey(consumerGroupId)){
-      partitionConsumerIndexMap.put(consumerGroupId,0);
-    }else{
-        currentIndex = partitionConsumerIndexMap.get(consumerGroupId);
-    }
-    if(currentIndex >= broker.getTopPartitionListMap().get(topic).get(partition).getMessageList().size()){
-      return CompletableFuture.completedFuture(Message.valueOf("No more message"));
-    }
-    partitionConsumerIndexMap.put(consumerGroupId,currentIndex+1);
-    return CompletableFuture.completedFuture(Message.valueOf(broker.getTopPartitionListMap().get(topic).get(partition).getMessageList().get(currentIndex).getContent()));
 
 
     //if (!CounterCommand.GET.matches(command)) {
@@ -324,6 +386,7 @@ public class CounterStateMachine extends BaseStateMachine {
     //}
 
     //return CompletableFuture.completedFuture(Message.valueOf(counter.toString() + " index: " + partitionIndex +" " + broker.toString()));
+    return CompletableFuture.completedFuture(Message.valueOf("query" + broker.toString()));
   }
 
   /**
@@ -342,6 +405,10 @@ public class CounterStateMachine extends BaseStateMachine {
     System.out.println("applyTransaction: " + command);
     String topic = command.split(" ")[0];
     String content = command.split(" ")[1];
+
+
+
+
     myMessage.setTopic(topic);
     myMessage.setContent(content);
 
@@ -350,7 +417,13 @@ public class CounterStateMachine extends BaseStateMachine {
     //}
     //increment the counter and update term-index
     final TermIndex termIndex = TermIndex.valueOf(entry);
-    final long incremented = incrementCounter(termIndex,myMessage);
+    String incremented = "";
+    if(!topic.equals("query")) {
+      incremented = Integer.toString(incrementCounter(termIndex, myMessage));
+    }else{
+      System.out.println("hhhhhh");
+      incremented = incrementIndex(termIndex,command);
+    }
 
     //if leader, log the incremented value and the term-index
     if (trx.getServerRole() == RaftPeerRole.LEADER) {

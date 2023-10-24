@@ -98,9 +98,10 @@ public final class CounterClient implements Closeable {
         System.err.println("Failed " + reply);
       }
     }
-    Message queryMessage = Message.valueOf("topic0 0 consumerGroup0");
+    Message queryMessage = Message.valueOf("query topic0 0 consumerGroup0");
     //send a GET command and print the reply
-    final RaftClientReply reply = client.io().sendReadOnly(queryMessage);
+    //final RaftClientReply reply = client.io().sendReadOnly(queryMessage);
+    final RaftClientReply reply = client.io().send(queryMessage);
     final String count = reply.getMessage().getContent().toStringUtf8();
     System.out.println("Current counter value: " + count);
 

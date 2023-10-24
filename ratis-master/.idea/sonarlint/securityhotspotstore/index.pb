@@ -89,3 +89,5 @@ Xratis-master/ratis-server/src/main/java/org/apache/ratis/server/impl/RaftServer
 ]ratis-master/ratis-server/src/main/java/org/apache/ratis/server/impl/StateMachineUpdater.java,3\f\3fa9c173cf9b0aed177af4786593122454c7b6c7
 ‡
 Wratis-master/ratis-examples/src/main/java/org/apache/ratis/examples/core/MyMessage.java,6\b\6bb6d1ed666f3158f8b4662a1e32742c98de5a4d
+
+`ratis-master/ratis-server/src/main/java/org/apache/ratis/statemachine/impl/BaseStateMachine.java,5\b\5b430fedc1629aadf98ff10be7c46c7852db2f34
