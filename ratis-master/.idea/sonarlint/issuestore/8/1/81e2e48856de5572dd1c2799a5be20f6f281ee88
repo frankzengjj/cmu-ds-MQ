@@ -1,31 +1,32 @@
 
-h	java:S112»"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8¸ ııµ1
+h	java:S112¶"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ªİ™§¶1
 v
-java:S2293—"YReplace the type specification in this constructor call with the diamond operator ("<>").(•Óß]8º ııµ1
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(•Óß]8«İ™§¶1
 w
-java:S2293É"YReplace the type specification in this constructor call with the diamond operator ("<>").(«ê÷„8º ııµ1
-X	java:S125e"<This block of commented-out lines of code should be removed.(Í¬¥Í8ÿ ııµ1
-H	java:S106…"+Replace this use of System.out by a logger.(ªú¦8¡ııµ1
-G	java:S106Š"+Replace this use of System.out by a logger.(µåè,8¡ııµ1
-M	java:S106‹"+Replace this use of System.out by a logger.(œîĞùÿÿÿÿÿ8¡ııµ1
-^	java:S125¿"<This block of commented-out lines of code should be removed.(§£¬øÿÿÿÿ8‡¡ııµ1
+java:S2293Ç"YReplace the type specification in this constructor call with the diamond operator ("<>").(«ê÷„8¬İ™§¶1
+G	java:S106|"+Replace this use of System.out by a logger.(ªú¦8ùİ™§¶1
+G	java:S106"+Replace this use of System.out by a logger.(µåè,8ùİ™§¶1
+M	java:S106‚"+Replace this use of System.out by a logger.(œîĞùÿÿÿÿÿ8úİ™§¶1
+[
+java:S1117¶"=Rename "myMessage" which hides the field declared at line 92.(ã½”›8©ú§¶1
+^	java:S125¾"<This block of commented-out lines of code should be removed.(§£¬øÿÿÿÿ8ÿİ™§¶1
 U
-java:S1135¿"2Complete the task associated to this TODO comment.(§£¬øÿÿÿÿ8ˆ¡ııµ1
-H	java:S106Ú"+Replace this use of System.out by a logger.(›Çò£8‹¡ııµ1
+java:S1135¾"2Complete the task associated to this TODO comment.(§£¬øÿÿÿÿ8ÿİ™§¶1
+H	java:S106Ø"+Replace this use of System.out by a logger.(›Çò£8‚Ş™§¶1
 _
-java:S3457‹"AFormat specifiers should be used instead of string concatenation.(Î ö–8¡ııµ1
+java:S3457ˆ"AFormat specifiers should be used instead of string concatenation.(Î ö–8…Ş™§¶1
 X
-java:S1117¶":Rename "broker" which hides the field declared at line 95.(öƒ’‡8¡ııµ1
+java:S1117²":Rename "broker" which hides the field declared at line 88.(öƒ’‡8ˆŞ™§¶1
 P
-java:S1135Ë"2Complete the task associated to this TODO comment.(ê¶§š8’¡ııµ1
-M	java:S106Î"+Replace this use of System.out by a logger.(·ù‹÷øÿÿÿÿ8’¡ııµ1
-G	java:S106Ğ"+Replace this use of System.out by a logger.(µåè,8—¡ııµ1
-M	java:S106Ñ"+Replace this use of System.out by a logger.(œîĞùÿÿÿÿÿ8—¡ııµ1
-M	java:S106ä"+Replace this use of System.out by a logger.(‡÷úÿÿÿÿ8™¡ııµ1
-O
-java:S1135ã"2Complete the task associated to this TODO comment.(ï¼±S8™¡ııµ1
-^	java:S125î"<This block of commented-out lines of code should be removed.(³ÛÉ¿şÿÿÿÿ8š¡ııµ1
+java:S1135Æ"2Complete the task associated to this TODO comment.(ê¶§š8‰Ş™§¶1
+M	java:S106É"+Replace this use of System.out by a logger.(·ù‹÷øÿÿÿÿ8‰Ş™§¶1
+G	java:S106Ë"+Replace this use of System.out by a logger.(µåè,8‰Ş™§¶1
+M	java:S106Ì"+Replace this use of System.out by a logger.(œîĞùÿÿÿÿÿ8‰Ş™§¶1
+M	java:S106ß"+Replace this use of System.out by a logger.(“³‹âùÿÿÿÿ8ŠŞ™§¶1
+^	java:S125ä"<This block of commented-out lines of code should be removed.(³ÛÉ¿şÿÿÿÿ8‹Ş™§¶1
 l
-java:S1128"ORemove this unused import 'org.apache.ratis.examples.core.index.ConsumerIndex'.(½±µş8›¡ııµ1
+java:S1128"ORemove this unused import 'org.apache.ratis.examples.core.index.ConsumerIndex'.(½±µş8ß¹¢§¶1
 Y
-java:S1128&"<Remove this unused import 'org.apache.ratis.util.JavaUtils'.(ç‹íœ8›¡ııµ1
+java:S1128&"<Remove this unused import 'org.apache.ratis.util.JavaUtils'.(ç‹íœ8ß¹¢§¶1
+J
+java:S1068\"-Remove this unused "myMessage" private field.(ÆĞ›–8üç§¶1

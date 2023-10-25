@@ -91,3 +91,5 @@ Xratis-master/ratis-server/src/main/java/org/apache/ratis/server/impl/RaftServer
 Wratis-master/ratis-examples/src/main/java/org/apache/ratis/examples/core/MyMessage.java,6\b\6bb6d1ed666f3158f8b4662a1e32742c98de5a4d
 ê
 `ratis-master/ratis-server/src/main/java/org/apache/ratis/statemachine/impl/BaseStateMachine.java,5\b\5b430fedc1629aadf98ff10be7c46c7852db2f34
+ò
+hratis-master/ratis-common/src/main/java/org/apache/ratis/protocol/exceptions/AlreadyClosedException.java,1\8\18816f93369c78fce6477e1ea0b5e45eec1fae05

@@ -54,20 +54,28 @@ public final class CounterClient implements Closeable {
     client.close();
   }
 
-  private void run(int increment, boolean blocking) throws Exception {
+  private void run(int messageCount, boolean blocking) throws Exception {
     System.out.printf("Sending %d %s command(s) using the %s ...%n",
-        increment, CounterCommand.INCREMENT, blocking? "BlockingApi": "AsyncApi");
-    final List<Future<RaftClientReply>> futures = new ArrayList<>(increment);
+            messageCount, CounterCommand.INCREMENT, blocking? "BlockingApi": "AsyncApi");
+    final List<Future<RaftClientReply>> futures = new ArrayList<>(messageCount);
     List<Message> messageList = new ArrayList<>();
-    for(int i = 0; i < 10; i++){
-      Message message = Message.valueOf("topic0 message"+ i);
+    for(int i = 0; i < 3; i++){
+      // send message
+      // message format: topic partition message
+      Message message = Message.valueOf("topic0 0 message"+ i);
+      messageList.add(message);
+    }
+    for(int i = 3; i < 6; i++){
+      // send message
+      // message format: topic partition message
+      Message message = Message.valueOf("topic0 1 message"+ i);
       messageList.add(message);
     }
     //send INCREMENT command(s)
     if (blocking) {
       // use BlockingApi
       final ExecutorService executor = Executors.newFixedThreadPool(10);
-      for (int i = 0; i < increment; i++) {
+      for (int i = 0; i < messageCount; i++) {
         int finalI = i;
         final Future<RaftClientReply> f = executor.submit(
             () -> client.io().send(
@@ -79,7 +87,7 @@ public final class CounterClient implements Closeable {
       executor.shutdown();
     } else {
       // use AsyncApi
-      for (int i = 0; i < increment; i++) {
+      for (int i = 0; i < messageCount; i++) {
         final Future<RaftClientReply> f = client.async().send(
             messageList.get(i)
                 //CounterCommand.INCREMENT.getMessage()
@@ -98,7 +106,9 @@ public final class CounterClient implements Closeable {
         System.err.println("Failed " + reply);
       }
     }
-    Message queryMessage = Message.valueOf("query topic0 0 consumerGroup0");
+    // query message
+    // message format: query topic partition consumerGroupId
+    Message queryMessage = Message.valueOf("query topic0 1 consumerGroup1");
     //send a GET command and print the reply
     //final RaftClientReply reply = client.io().sendReadOnly(queryMessage);
     final RaftClientReply reply = client.io().send(queryMessage);
@@ -142,9 +152,9 @@ public final class CounterClient implements Closeable {
   public static void main(String[] args) {
     try(CounterClient client = new CounterClient()) {
       //the number of INCREMENT commands, default is 10
-      final int increment = args.length > 0 ? Integer.parseInt(args[0]) : 10;
+      final int messageCount = args.length > 0 ? Integer.parseInt(args[0]) : 6;
       final boolean io = args.length > 1 && "io".equalsIgnoreCase(args[1]);
-      client.run(increment, io);
+      client.run(messageCount, io);
     } catch (Throwable e) {
       e.printStackTrace();
       System.err.println();

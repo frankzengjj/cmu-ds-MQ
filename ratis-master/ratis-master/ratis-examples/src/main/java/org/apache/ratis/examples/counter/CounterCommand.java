@@ -22,6 +22,7 @@ import org.apache.ratis.protocol.Message;
 /**
  * The supported commands the Counter example.
  */
+//TODO
 public enum CounterCommand {
   /** Increment the counter by 1. */
   INCREMENT,

@@ -168,7 +168,7 @@ public class CounterStateMachine extends BaseStateMachine {
 
   }
 
-  private synchronized String incrementCounter(TermIndex termIndex,MyMessage myMessage){
+  private synchronized String addMessage(TermIndex termIndex,String command){
     try {
       if (!simulatedSlowness.equals(TimeDuration.ZERO)) {
         simulatedSlowness.sleep();
@@ -179,12 +179,19 @@ public class CounterStateMachine extends BaseStateMachine {
     }
     updateLastAppliedTermIndex(termIndex);
 
+    MyMessage myMessage = new MyMessage();
+    String topic = command.split(" ")[0];
+    int partitionIndex = Integer.parseInt(command.split(" ")[1]);
+    String content = command.split(" ")[2];
+
+    myMessage.setTopic(topic);
+    myMessage.setContent(content);
+
     //TODO default partition index = 0;
     //1. Build partition
-    int partitionIndex = 0;
     if(broker.getTopPartitionListMap().containsKey(myMessage.getTopic())) {
-      if (broker.getTopPartitionListMap().get(myMessage.getTopic()).size() < partitionIndex) {
-        for (int i = broker.getTopPartitionListMap().get(myMessage.getTopic()).size(); i < partitionIndex; i++) {
+      if (broker.getTopPartitionListMap().get(myMessage.getTopic()).size() <= partitionIndex) {
+        for (int i = broker.getTopPartitionListMap().get(myMessage.getTopic()).size(); i <= partitionIndex; i++) {
           broker.getTopPartitionListMap().get(myMessage.getTopic()).add(new Partition());
         }
       }
@@ -339,15 +346,12 @@ public class CounterStateMachine extends BaseStateMachine {
     final LogEntryProto entry = trx.getLogEntry();
 
     //check if the command is valid
-    final String command = entry.getStateMachineLogEntry().getLogData().toStringUtf8();
+    final String req = entry.getStateMachineLogEntry().getLogData().toStringUtf8();
     // Handle request
-    System.out.println("applyTransaction: " + command);
-    String topic = command.split(" ")[0];
-    String content = command.split(" ")[1];
+    System.out.println("applyTransaction: " + req);
+    String command = req.split(" ")[0];
 
 
-    myMessage.setTopic(topic);
-    myMessage.setContent(content);
 
     //if (!CounterCommand.INCREMENT.matches(command)) {
     //  return JavaUtils.completeExceptionally(new IllegalArgumentException("Invalid Command: " + command));
@@ -356,11 +360,11 @@ public class CounterStateMachine extends BaseStateMachine {
     final TermIndex termIndex = TermIndex.valueOf(entry);
     String reply = "";
     // add message
-    if(!topic.equals("query")) {
-      reply = incrementCounter(termIndex, myMessage);
+    if(command.equals("query")) {
+      reply = incrementIndex(termIndex,req);
     //  read message
     }else{
-      reply = incrementIndex(termIndex,command);
+      reply = addMessage(termIndex, req);
     }
 
     //if leader, log the incremented value and the term-index
