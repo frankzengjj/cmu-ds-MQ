@@ -108,7 +108,7 @@ public final class CounterClient implements Closeable {
     }
     // query message
     // message format: query topic partition consumerGroupId
-    Message queryMessage = Message.valueOf("query topic0 1 consumerGroup1");
+    Message queryMessage = Message.valueOf("query topic0 0 consumerGroup2");
     //send a GET command and print the reply
     //final RaftClientReply reply = client.io().sendReadOnly(queryMessage);
     final RaftClientReply reply = client.io().send(queryMessage);
